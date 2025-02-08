@@ -8,10 +8,10 @@ export class DailyOffersService{
         const todaysDate = new Date().toISOString().split('T')[0];
 
         try {
-            const todaysOffer = this.dailyOffersRepository.dailyOfferMeals(todaysDate);
-            if (todaysOffer != null) 
+            const todaysOffer = await this.dailyOffersRepository.dailyOfferMeals(todaysDate);
+            if (todaysOffer && todaysOffer.length > 0)
                 return todaysOffer;
-            
+
             return await this.dailyOffersRepository.getClosestDateOffers(todaysDate);
         } catch (error) {
             throw new NotFoundError("Daily offer is not founded")
